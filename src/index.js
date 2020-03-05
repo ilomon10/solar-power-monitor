@@ -2,12 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Router from './router';
 import * as serviceWorker from './serviceWorker';
+import { FirebaseProvider } from './components/Firebase';
 
 import 'normalize.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 
-ReactDOM.render(<Router />, document.getElementById('root'));
+ReactDOM.render(
+  <FirebaseProvider>
+    <Router />
+  </FirebaseProvider>
+  , document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

@@ -16,26 +16,25 @@ const Table = styled(HTMLTable)`
   }
 `
 
-export default (props) => {
+export default ({ interactive, condensed, column, head, ...props }) => {
+  const tHead = head.map((row, i) => (
+    <tr key={i}>
+      {row.map(({ title, col = 1, row = 1 }, i) =>
+        (<th key={i} colSpan={col} rowSpan={row}>{title}</th>)
+      )}
+    </tr>
+  ))
   const data = props.data.map((v) => (
-    <tr key={v}>
-      <td>{Math.floor(Math.random() * 9999)}</td>
-      <td>{Math.floor(Math.random() * 99999999)}</td>
-      <td>{(Math.random() * 12).toFixed(2)}</td>
-      <td>{(Math.random() * 2).toFixed(2)}</td>
-      <td>{(Math.random() * 40).toFixed(2)}</td>
+    <tr key={v['uid']}>
+      {column.map((c) => (
+        <td key={`${v['uid']}_${c}`}>{v[c]}</td>
+      ))}
     </tr>
   ))
   return (
-    <Table>
+    <Table interactive condensed>
       <thead>
-        <tr>
-          <th>device</th>
-          <th>timestamp</th>
-          <th>voltage</th>
-          <th>current</th>
-          <th>temperature</th>
-        </tr>
+        {tHead}
       </thead>
       <tbody>
         {data}

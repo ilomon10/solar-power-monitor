@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Flex } from '../components/layout';
-import StatisticDevices from './statistic.devices';
-import StatisticDevice from './statistic.device';
+import Devices from './Devices';
+import Device from './Device';
 import StatisticChart from './statistic.chart';
 import { Route, Switch } from 'react-router-dom';
 import { NonIdealState } from '@blueprintjs/core';
@@ -15,10 +15,10 @@ export default () => {
         height="100%" width={1}>
         <Flex width={1 / 3} flexDirection="column">
           <Flex flexGrow={1}>
-            <StatisticDevices path='/statistic/' />
+            <Devices path='/statistic/' />
           </Flex>
           <Flex flexShrink={0}>
-            <Route path="/statistic/:id" component={StatisticDevice} />
+            <Route path="/statistic/:id" component={Device} />
           </Flex>
         </Flex>
         <Box width={2 / 3} height="100%" pl={3}>

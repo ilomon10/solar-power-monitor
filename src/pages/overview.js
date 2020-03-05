@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Icon, Colors, Tag } from '@blueprintjs/core';
 import { Link } from 'react-router-dom';
 import { Flex, Box, Text } from '../components/layout';
@@ -11,6 +11,7 @@ import OverviewStatisticChart from './overview.statistic-chart';
 import OverviewTrafficChart from './overview.traffic-chart';
 
 export default () => {
+  const deviceId = useState('...');
   return (
     <Flex width='100%' py={3}
       justifyContent="center" alignItems="center">
@@ -67,13 +68,13 @@ export default () => {
             <Flex width={1 / 2} px={2} mb={3} flexDirection="column">
               <Flex flexShrink={0}>
                 <Heading text="Statistic" textInfo={(<>
-                  <span>(data dari perangkat</span> <Tag minimal>#3425</Tag><span> hari ini)</span>
+                  <span>(data dari perangkat</span> <Tag minimal>{deviceId[0].slice(0, 6)}</Tag><span> hari ini)</span>
                 </>)} textRight={<Link to="/statistic">Lihat selengkapnya</Link>} />
               </Flex>
               <Flex flexGrow={1}>
                 <Card bg={Colors.WHITE} width={1} p={0} interactive>
                   <Wrapper>
-                    <OverviewStatisticChart />
+                    <OverviewStatisticChart onDeviceChange={(id) => deviceId[1](id)} />
                   </Wrapper>
                 </Card>
               </Flex>
