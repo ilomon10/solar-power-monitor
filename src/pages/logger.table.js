@@ -15,7 +15,7 @@ export default () => {
   const tableHead = [[
     { title: 'Timestamp', row: 2 },
     { title: 'Produce', col: 3 },
-    { title: 'Column', col: 3 },
+    { title: 'Consump', col: 3 },
     { title: 'Temperature', row: 2 }
   ], [
     { title: 'Power' },

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { Spinner, } from '@blueprintjs/core';
 import { FirebaseContext } from './Firebase';
@@ -8,13 +8,16 @@ export default ({ ...props }) => {
   const firebase = useContext(FirebaseContext);
   const history = useHistory();
   const [isAuth, setIsAuth] = useState(false);
-  firebase.auth.onAuthStateChanged(function (user) {
-    if (!user) {
-      history.push('/login');
-      return;
-    }
-    setIsAuth(true);
-  });
+  useEffect(()=>{
+    firebase.auth.onAuthStateChanged(function (user) {
+      if (!user) {
+        history.push('/login');
+        return;
+      }
+      setIsAuth(true);
+    });
+  }, []);
+  
   const Loading = (
     <SpinnerWrapper>
       <Spinner size={100} />

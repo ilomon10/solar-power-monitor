@@ -3,10 +3,10 @@ import db from './db';
 
 export interface IDevice {
   location: string;
-  create_at: number;
+  create_at: Object;
   produce: number;
   consump: number;
-  last_receive_data_at: number;
+  last_receive_data_at: Object;
 }
 
 export const handler = (req: https.Request, res: Response) => {

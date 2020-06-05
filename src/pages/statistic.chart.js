@@ -1,11 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
-import ApexChart from 'react-apexcharts';
 import { Flex } from '../components/layout';
 import Card from '../components/Card';
 import Wrapper from '../components/Wrapper';
 import { FirebaseContext } from '../components/Firebase';
 import styled from 'styled-components';
+import Chart from '../components/Chart';
 
 const SeriesStyle = styled(Flex)`
   margin-top: 16px;
@@ -21,9 +21,9 @@ export default () => {
   const defaultOptions = {
     chart: {
       type: 'line',
-      toolbar: { show: false, },
-      zoom: { enabled: false }
+      group: 'trends',
     },
+    dataLabels: { enabled: false },
     title: { text: 'title' },
     yaxis: {
       labels: { formatter: (value) => value.toFixed(2) }
@@ -33,18 +33,31 @@ export default () => {
     }
   };
   const options = [{
-    ...defaultOptions,
+    chart: {
+      id: 'chart_power',
+    },
     title: { text: 'Power' }
   }, {
-    ...defaultOptions,
+    chart: {
+      id: 'chart_voltage',
+    },
     title: { text: 'Voltage' }
   }, {
-    ...defaultOptions,
+    chart: {
+      id: 'chart_current',
+    },
     title: { text: 'Current' }
   }, {
-    ...defaultOptions,
+    chart: {
+      id: 'chart_temperature',
+    },
     title: { text: 'Temperature' }
   }];
+  const options = useCallback((name) => {
+    return {
+      ...options
+    }
+  })
   useEffect(() => {
     const ref = firebase.dataLake().orderByChild('device').equalTo(params.id);
     const prom = ref.on('value', (snapshot) => {
@@ -89,14 +102,15 @@ export default () => {
   }, [firebase, params.id])
   return (
     <Flex height="100%" flexDirection="column">
-      {options.map((option, i) => (
-        <SeriesStyle key={i} flexGrow={1}>
+      {options.map((option, i) => {
+        return (<SeriesStyle key={option.chart.id} flexGrow={1}>
           <Card width={1}>
             <Wrapper>
-              <ApexChart height="100%" width="100%" options={option} series={series[i] || []} />
+              <Chart options={option} series={series[i] || []} />
             </Wrapper>
           </Card>
-        </SeriesStyle>))}
+        </SeriesStyle>)
+      })}
     </Flex>
   )
 }

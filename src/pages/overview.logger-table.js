@@ -13,6 +13,7 @@ export default () => {
       .endAt(now.endOf('day').valueOf())
     const prom = ref.on('value', (snapshot) => {
       const snap = snapshot.val();
+      if (!snap) return;
       const value = Object.keys(snap).map(v => {
         return {
           powerIn: snap[v].powerIn.toFixed(2),

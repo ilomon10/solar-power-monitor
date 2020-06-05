@@ -10,8 +10,13 @@ export default ({ onDeviceChange }) => {
   const options = {
     chart: {
       type: 'line',
+      group: 'social',
       toolbar: { show: false, },
-      zoom: { enabled: false }
+      zoom: { enabled: false },
+      // brush: { enabled: true },
+    },
+    dataLabels: {
+      enabled: false
     },
     yaxis: {
       floating: true,
